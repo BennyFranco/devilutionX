@@ -40,9 +40,9 @@ sudo cp -a libpng-1.6.36/build/Release/libpng16.16.36.0.dylib /usr/local/lib/lib
 
 echo "============= Build Freetype ============="
 mkdir freetype-2.9.1/build
-cd freetype-2.9.1/build
-cmake .. -G"Xcode" -D BUILD_FRAMEWORK:BOOL=true
-cd ../..
+cd freetype-2.9.1
+cmake -B"build" -G"Xcode" -D BUILD_FRAMEWORK:BOOL=true
+cd ..
 xcodebuild -project "freetype-2.9.1/build/freetype.xcodeproj" -scheme "ALL_BUILD" build -configuration Release ARCHS="i386 x86_64" ONLY_ACTIVE_ARCH=NO
 
 echo "============= Build SDL2_ttf ============="
@@ -52,7 +52,7 @@ xcodebuild -project "SDL2_ttf-2.0.15/Xcode/SDL_ttf.xcodeproj" -scheme "Framework
 cp -a SDL2_ttf-2.0.15/Xcode/DerivedData/Build/Products/Release/SDL2_ttf.framework ~/Library/Frameworks
 
 echo "============= Build Libsodium ============="
-cp 3rdParty/libsodium/osxi386.sh libs/libsodium-1.0.17/dist-build/osxi386.sh
+cp ../3rdParty/libsodium/osxi386.sh libsodium-1.0.17/dist-build/osxi386.sh
 cd libsodium-1.0.17
 sudo ./autogen.sh
 ./dist-build/osxi386.sh
