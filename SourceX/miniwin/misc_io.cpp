@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <fstream>
 #include <memory>
+#include <stdexcept>
 
 #include "devilution.h"
 #include "stubs.h"
@@ -27,7 +28,7 @@ HANDLE CreateFileA(LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode,
 	char name[DVL_MAX_PATH];
 	TranslateFileName(name, sizeof(name), lpFileName);
 	DUMMY_PRINT("file: %s (%s)", lpFileName, name);
-	UNIMPLEMENTED_UNLESS(dwDesiredAccess == (DVL_GENERIC_READ | DVL_GENERIC_WRITE));
+	UNIMPLEMENTED_UNLESS(!(dwDesiredAccess & ~(DVL_GENERIC_READ | DVL_GENERIC_WRITE)));
 	memfile* file = new memfile;
 	file->path = name;
 	if (dwCreationDisposition == DVL_OPEN_EXISTING) {
@@ -129,19 +130,23 @@ WINBOOL CloseHandle(HANDLE hObject)
 		return true;
 	std::unique_ptr<memfile> ufile(file);  // ensure that delete file is
 	                                       // called on returning
-	bool ret = true;
-	std::ofstream filestream(file->path + ".tmp", std::ios::binary);
-	if (filestream.fail())
-		ret = false;
-	filestream.write(file->buf.data(), file->buf.size());
-	if (filestream.fail())
-		ret = false;
-	if (std::rename((file->path + ".tmp").c_str(), file->path.c_str()))
-		ret = false;
-	if(!ret) {
+	files.erase(file);
+	try {
+		std::ofstream filestream(file->path + ".tmp", std::ios::binary | std::ios::trunc);
+		if (filestream.fail())
+			throw std::runtime_error("ofstream");
+		filestream.write(file->buf.data(), file->buf.size());
+		if (filestream.fail())
+			throw std::runtime_error("ofstream::write");
+		std::remove(file->path.c_str());
+		if (std::rename((file->path + ".tmp").c_str(), file->path.c_str()))
+			throw std::runtime_error("rename");
+		return true;
+	} catch (std::runtime_error e) {
+		// log
 		DialogBoxParam(ghInst, DVL_MAKEINTRESOURCE(IDD_DIALOG7), ghMainWnd, (DLGPROC)FuncDlg, (LPARAM)file->path.c_str());
+		return false;
 	}
-	return ret;
 }
 
 }  // namespace dvl

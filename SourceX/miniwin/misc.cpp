@@ -4,6 +4,7 @@
 #include "stubs.h"
 #include "dx.h"
 #include "DiabloUI/diabloui.h"
+#include <string>
 
 namespace dvl {
 
@@ -405,13 +406,13 @@ void GetLocalTime(LPSYSTEMTIME lpSystemTime)
 	UNIMPLEMENTED();
 }
 
-long _findfirst(const char *, struct DVL_finddata_t *)
+long _findfirst(const char *pattern, struct DVL_finddata_t *finder)
 {
-	UNIMPLEMENTED();
+	DUMMY();
 	return -1;
 }
 
-int _findnext(long, struct DVL_finddata_t *)
+int _findnext(long, struct DVL_finddata_t *finder)
 {
 	UNIMPLEMENTED();
 	return -1;
@@ -585,9 +586,7 @@ DWORD GetCurrentProcessId()
 HANDLE CreateFileMappingA(HANDLE hFile, LPSECURITY_ATTRIBUTES lpFileMappingAttributes, DWORD flProtect,
     DWORD dwMaximumSizeHigh, DWORD dwMaximumSizeLow, LPCSTR lpName)
 {
-	DUMMY();
-	assert(hFile == (HANDLE)-1);
-	return NULL;
+	UNIMPLEMENTED();
 }
 
 LPVOID MapViewOfFile(HANDLE hFileMappingObject, DWORD dwDesiredAccess, DWORD dwFileOffsetHigh,
@@ -623,7 +622,7 @@ DWORD GetPrivateProfileStringA(LPCSTR lpAppName, LPCSTR lpKeyName, LPCSTR lpDefa
 		strncpy(lpReturnedString, lpDefault, nSize);
 		SRegSaveString(lpAppName, lpKeyName, 0, lpReturnedString);
 	}
-	return 0;  // dummy return value
+	return 0; // dummy return value
 }
 
 int MessageBoxA(HWND hWnd, const char *Text, const char *Title, UINT Flags)
