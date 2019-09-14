@@ -408,6 +408,18 @@
 			name = "Source Files";
 			sourceTree = "<group>";
 		};
+		43A5FF19232D89D900D4830E /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				43DA13342271574700E21D4A /* misc_io.cpp */,
+				43DA133A2271574800E21D4A /* misc.cpp */,
+				805FB64622DD7E4A00BDC35B /* selyesno.cpp */,
+				43DA13392271574800E21D4A /* misc_msg.cpp */,
+				43DA13322271574600E21D4A /* thread.cpp */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		43BF58ED2235E0E1001F9748 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -548,6 +560,7 @@
 				9C3F8B1EBE5743E5AE9F0B20 /* Radon */,
 				47705255650E4CFC92B1503F /* smacker */,
 				5DF51F706DAB42D8B35DE8D9 /* StormLib */,
+				43A5FF19232D89D900D4830E /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1311,9 +1324,14 @@
 					DEVILUTION_STUB,
 					_DEBUG,
 					FASTER,
+					__GNUC__,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/SourceS";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/SourceS",
+					"$(PROJECT_DIR)/libs/frameworks/SDL2.framework/Headers",
+					"$(SRCROOT)/Source",
+				);
 				INSTALL_PATH = "";
 				LIBRARY_STYLE = STATIC;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
@@ -1367,10 +1385,7 @@
 				LIBRARY_STYLE = STATIC;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = (
-					"-DNDEBUG",
-					" ",
-				);
+				OTHER_CFLAGS = "-DNDEBUG  ";
 				OTHER_LIBTOOLFLAGS = " ";
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = smacker;
@@ -1458,9 +1473,14 @@
 					DEVILUTION_STUB,
 					_DEBUG,
 					FASTER,
+					__GNUC__,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/SourceS";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/SourceS",
+					"$(PROJECT_DIR)/libs/frameworks/SDL2.framework/Headers",
+					"$(SRCROOT)/Source",
+				);
 				INSTALL_PATH = "";
 				LIBRARY_STYLE = STATIC;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
@@ -1514,10 +1534,7 @@
 				LIBRARY_STYLE = STATIC;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CPLUSPLUSFLAGS = (
-					"'-std=c++14'",
-					" ",
-				);
+				OTHER_CPLUSPLUSFLAGS = "'-std=c++14'  ";
 				OTHER_LIBTOOLFLAGS = " ";
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = PKWare;
@@ -1628,10 +1645,7 @@
 				LIBRARY_STYLE = STATIC;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CPLUSPLUSFLAGS = (
-					"'-std=c++14'",
-					" ",
-				);
+				OTHER_CPLUSPLUSFLAGS = "'-std=c++14'  ";
 				OTHER_LIBTOOLFLAGS = " ";
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = StormLib;
